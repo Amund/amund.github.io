@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Randorem</title>
+
+        <link
+            rel="stylesheet"
+            href="https://fonts.cdnfonts.com/css/ubuntu?styles=169521,169523"
+        />
+
+        <style>
+            body {
+                font-family: 'Ubuntu', sans-serif;
+                font-weight: 300;
+                margin-inline: 1em;
+            }
+            h1,
+            h2,
+            h3 {
+                font-weight: 500;
+
+                & * {
+                    font-weight: inherit;
+                    font-size: inherit;
+                    padding:4px 8px;
+                }
+            }
+            main {
+                margin-inline: auto;
+                max-width: 46em;
+            }
+            section {
+                margin-block: 3em;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>Randorem</h1>
+
+            <p><a href="https://github.com/Amund/randorem">https://github.com/Amund/randorem</a></p>
+
+            <section>
+                <h2>
+                    <button type="button">Generate</button>
+                    <select id="number">
+                        <option>1</option>
+                        <option selected>5</option>
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                    </select>
+                    <select id="type">
+                        <option value="word">words</option>
+                        <option value="sentence">sentences</option>
+                        <option value="paragraph" selected>paragraphs</option>
+                    </select>
+                </h2>
+                <output></output>
+            </section>
+        </main>
+
+        <script type="module">
+            import Randorem from 'https://cdn.jsdelivr.net/npm/@amundsan/randorem'
+
+            const button = document.querySelector('button'),
+                number = document.querySelector('#number'),
+                type = document.querySelector('#type'),
+                output = document.querySelector('output')
+            
+            function process() {
+                const num = parseInt(number.value, 10)
+                const arr = []
+                for(let i=0;i<num;i++) {
+                    const line = `<p>${Randorem[type.value]()}</p>`
+                    arr.push(line)
+                }
+                output.innerHTML = arr.join('')
+            }
+
+            button.addEventListener('click', ()=>process())
+            number.addEventListener('input', () => process())
+            type.addEventListener('input', () => process())
+            document.addEventListener('DOMContentLoaded', () => process())
+        </script>
+    </body>
+</html>
